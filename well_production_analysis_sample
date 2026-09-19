@@ -1,0 +1,50 @@
+# STEP 1: Your dataset
+# (Real analysts work with imported CSV files.
+# You are building the thinking first.)
+
+well_data = {
+    "Well_A": [520, 480, 510, 490, 530,
+               470, 500, 495, 515, 505],
+    "Well_B": [310, 295, 320, 285, 300,
+               315, 290, 305, 295, 310],
+    "Well_C": [750, 720, 780, 710, 760,
+               740, 725, 755, 745, 730]
+}
+# Each number = daily barrels of oil produced
+
+
+# STEP 2: Write these analysis functions
+
+def average_production(data):
+    return sum(data) / len(data)
+
+def best_day(data):
+    return max(data)
+
+def worst_day(data):
+    return min(data)
+
+def total_production(data):
+    return sum(data)
+
+
+# STEP 3: Generate a production report
+# using a for loop
+
+print("=" * 40)
+print("   WELL PRODUCTION ANALYSIS REPORT")
+print("=" * 40)
+
+for well, production in well_data.items():
+    avg = average_production(production)
+    best = best_day(production)
+    worst = worst_day(production)
+    total = total_production(production)
+
+    print(f"\n{well}:")
+    print(f"  Average daily output : {avg:.1f} bbl")
+    print(f"  Best single day      : {best} bbl")
+    print(f"  Worst single day     : {worst} bbl")
+    print(f"  Total over 10 days   : {total} bbl")
+
+print("\n" + "=" * 40)

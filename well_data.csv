@@ -1,0 +1,9 @@
+Well_Name,Location,Type,Avg_Daily_Barrels,Days_Producing,Water_Cut,Status
+Well_Alpha,Northern Block,Oil,520,365,0.15,Active
+Well_Beta,Southern Block,Oil,303,280,0.22,Active
+Well_Gamma,Northern Block,Gas condensate,742,410,0.08,Active
+Well_Delta,Eastern Block,Oil,179,190,0.45,Review needed
+Well_Epsilon,Southern Block,Oil,634,320,0.18,Active
+Well_Zeta,Eastern Block,Gas condensate,289,245,0.35,Review needed
+Well_Eta,Northern Block,Oil,891,400,0.11,Active
+Well_Theta,Western Block,Oil,156,180,0.67,Inactive
