@@ -81,7 +81,7 @@ Potential improvements include:
 * SQLite database integration
 * Improved GUI design
 
-Project Files
+## Project Files
 
 - [Python Application](../industry_system.py)
 - [JSON Database](../companies.json)
