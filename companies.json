@@ -1,0 +1,42 @@
+{
+    "ghana_petroleum_commission": {
+        "sector": "Resource management",
+        "headquarters": "Accra",
+        "key_fact": "Manages petroleum resources",
+        "year_founded": "2011",
+        "ceo": "Not specified",
+        "industry_role": "Petroleum resource management"
+    },
+    "national_petroleum_authority": {
+        "sector": "Petroleum regulation",
+        "headquarters": "Accra",
+        "key_fact": "Regulates downstream petroleum activities",
+        "year_founded": "Not specified",
+        "ceo": "Not specified",
+        "industry_role": "Downstream petroleum regulation"
+    },
+    "company_name": {
+        "sector": "Sector",
+        "headquarters": "Headquarters",
+        "key_fact": "Key Fact",
+        "year_founded": "Year Founded",
+        "ceo": "CEO",
+        "industry_role": "Industry Role"
+    },
+    "newmont": {
+        "sector": "Data Management",
+        "headquarters": "Accra",
+        "key_fact": "Gold leader",
+        "year_founded": "2006",
+        "ceo": "Hayford Stark",
+        "industry_role": "Gold Mining"
+    },
+    "trans": {
+        "sector": "Data Management",
+        "headquarters": "Accra",
+        "key_fact": "Gold leader",
+        "year_founded": "2006",
+        "ceo": "Hayford Stark",
+        "industry_role": "Gold Mining"
+    }
+}
