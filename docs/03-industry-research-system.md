@@ -83,5 +83,5 @@ Potential improvements include:
 
 ## Project Files
 
-- [Python Application](../industry_system.py)
-- [JSON Database](../companies.json)
+[Python Application](../industry_system.py)
+[JSON Database](../companies.json)
