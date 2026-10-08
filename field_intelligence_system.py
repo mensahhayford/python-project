@@ -2,25 +2,12 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ═══════════════════════════════════
-# THE CONCEPT: PRODUCTION DECLINE
-# All oil wells decline over time.
-# The rate and pattern of decline
-# can be predicted using regression.
-# This is called decline curve analysis —
-# one of the most fundamental
-# techniques in petroleum engineering.
-# ═══════════════════════════════════
 
-# Create production history data
-# for one well over 24 months
 np.random.seed(42)
 months = np.arange(1, 25)
 
-# Exponential decline with some noise
-# (this is real decline curve behaviour)
-initial_rate = 1000  # barrels/day at start
-decline_rate = 0.08  # 8% monthly decline
+initial_rate = 1000 
+decline_rate = 0.08 
 
 true_production = (
     initial_rate * np.exp(-decline_rate * months)
@@ -40,8 +27,7 @@ print("=== WELL PRODUCTION HISTORY ===")
 print(df_decline.to_string())
 
 # ═══════════════════════════════════
-# STEP 1: VISUALISE THE DATA FIRST
-# Always visualise before modelling
+# STEP 1: VISUALISE
 # ═══════════════════════════════════
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -63,10 +49,6 @@ axes[0].legend()
 
 # ═══════════════════════════════════
 # STEP 2: PREPARE DATA FOR ML
-# Exponential decline becomes linear
-# when you take the natural log.
-# This is a key petroleum engineering
-# transformation.
 # ═══════════════════════════════════
 
 df_decline["Log_Production"] = np.log(
@@ -80,20 +62,13 @@ print(df_decline[
 ].head(10).round(3))
 
 # ═══════════════════════════════════
-# STEP 3: BUILD YOUR FIRST ML MODEL
-# Linear regression on log-transformed data
-# = exponential decline curve fitting
+# STEP 3: BUILD MY FIRST ML MODEL
 # ═══════════════════════════════════
-
-# Manual linear regression
-# (so you understand what is happening
-# before using sklearn)
 
 n = len(df_decline)
 x = df_decline["Month"].values
 y = df_decline["Log_Production"].values
 
-# Calculate slope and intercept
 x_mean = x.mean()
 y_mean = y.mean()
 
@@ -113,7 +88,6 @@ print(f"Monthly decline rate : "
 
 # ═══════════════════════════════════
 # STEP 4: MAKE PREDICTIONS
-# Project production for next 12 months
 # ═══════════════════════════════════
 
 future_months = np.arange(25, 37)
@@ -195,18 +169,11 @@ plt.savefig(
 plt.show()
 print("\nDecline curve chart saved.")
 
-# ═══════════════════════════════════
-# DAY 14 CAPSTONE:
-# COMPLETE FIELD INTELLIGENCE SYSTEM
-# Combines EVERYTHING from 14 days
-# ═══════════════════════════════════
-
 print("\n" + "="*55)
 print("  COMPLETE FIELD INTELLIGENCE SYSTEM")
 print("  Day 14 Capstone — [Your Name]")
 print("="*55)
 
-# Use your full well dataset
 try:
     df = pd.read_csv("well_data_cleaned.csv")
 except FileNotFoundError:
@@ -241,7 +208,6 @@ except FileNotFoundError:
     }
     df = pd.DataFrame(data)
 
-# FUNCTION 1: Production score
 def calculate_score(row):
     """
     Composite well performance score.
@@ -259,7 +225,7 @@ df["Performance_Score"] = df.apply(
     calculate_score, axis=1
 )
 
-# FUNCTION 2: Risk classification
+
 def classify_risk(row):
     if row["Water_Cut"] > 0.50:
         return "CRITICAL"
@@ -273,7 +239,6 @@ def classify_risk(row):
 
 df["Risk_Level"] = df.apply(classify_risk, axis=1)
 
-# FUNCTION 3: Action recommendation
 def recommend_action(row):
     if row["Risk_Level"] == "CRITICAL":
         return "Immediate intervention required"
@@ -288,7 +253,6 @@ df["Recommended_Action"] = df.apply(
     recommend_action, axis=1
 )
 
-# PRINT FINAL INTELLIGENCE REPORT
 print("\n=== WELL PERFORMANCE INTELLIGENCE ===\n")
 display_cols = [
     "Well_Name", "Avg_Daily_Barrels",
@@ -312,7 +276,7 @@ for _, row in df.sort_values(
           f"| Water Cut: {row['Water_Cut']*100:.0f}%")
     print(f"  Action: {row['Recommended_Action']}\n")
 
-# BLOCK SUMMARY
+
 print("=== BLOCK SUMMARY ===")
 block_summary = df.groupby("Location").agg(
     Wells=("Well_Name", "count"),
