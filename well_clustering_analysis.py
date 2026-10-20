@@ -8,21 +8,11 @@ from sklearn.decomposition import PCA
 
 np.random.seed(42)
 
-# ═══════════════════════════════════
 # THE PROBLEM:
 # We have 80 wells across a field.
 # We don't know in advance how many
 # "types" of wells exist.
 # We want the data to tell us.
-#
-# REAL INDUSTRY VALUE:
-# Different well types need different
-# management strategies.
-# A well in decline needs different
-# intervention than a stable producer.
-# Finding these groups automatically
-# helps operations teams prioritise.
-# ═══════════════════════════════════
 
 n_wells = 80
 
@@ -83,9 +73,7 @@ print(df_cluster.describe().round(2))
 print(f"\n{n_wells} wells, no labels —")
 print("algorithm will find the groups.")
 
-# ═══════════════════════════════════
 # STEP 1: SCALE THE FEATURES
-# ═══════════════════════════════════
 
 features = [
     "Production_Rate",
@@ -101,9 +89,7 @@ X_scaled = scaler.fit_transform(X)
 print("\nFeatures scaled successfully.")
 print(f"Scaled array shape: {X_scaled.shape}")
 
-# ═══════════════════════════════════
 # STEP 2: FIND OPTIMAL K
-# ═══════════════════════════════════
 
 inertias = []
 silhouette_scores = []
@@ -137,9 +123,7 @@ best_k = k_range[
 ]
 print(f"\nBest K by silhouette score: {best_k}")
 
-# ═══════════════════════════════════
 # STEP 3: FIT THE FINAL MODEL
-# ═══════════════════════════════════
 
 final_kmeans = KMeans(
     n_clusters=best_k,
@@ -149,10 +133,7 @@ final_kmeans = KMeans(
 final_kmeans.fit(X_scaled)
 df_cluster["Cluster"] = final_kmeans.labels_
 
-# ═══════════════════════════════════
 # STEP 4: ANALYSE THE CLUSTERS
-# What did the algorithm find?
-# ═══════════════════════════════════
 
 print(f"\n=== CLUSTER ANALYSIS ===")
 print(f"Algorithm found {best_k} distinct well types\n")
@@ -169,7 +150,6 @@ cluster_summary = df_cluster.groupby(
 
 print(cluster_summary.to_string())
 
-# Name clusters by their characteristics
 def name_cluster(row):
     if row["Avg_Production"] > 600:
         return "HIGH PERFORMER"
