@@ -15,21 +15,11 @@ from sklearn.metrics import (
 )
 from sklearn.preprocessing import LabelEncoder
 
-# ═══════════════════════════════════
 # THE PROBLEM:
 # Predict which wells will need
 # intervention (workover or
 # chemical treatment) in the
 # next 90 days.
-#
-# REAL INDUSTRY CONTEXT:
-# Workovers (well intervention jobs)
-# cost $100K–$5M each.
-# Predicting them in advance allows
-# scheduling and cost optimisation.
-# Late detection = emergency intervention
-# = much higher cost.
-# ═══════════════════════════════════
 
 np.random.seed(42)
 n_wells = 150
@@ -83,9 +73,7 @@ print(f"\nWells needing intervention: "
       f"{needs_intervention.sum()} "
       f"({needs_intervention.mean()*100:.1f}%)")
 
-# ═══════════════════════════════════
 # PREPARE FEATURES AND TARGET
-# ═══════════════════════════════════
 
 feature_columns = [
     "Days_Producing", "Water_Cut",
@@ -103,23 +91,14 @@ X_train, X_test, y_train, y_test = (
         X, y,
         test_size=0.2,
         random_state=42,
-        stratify=y  # Ensures balanced split
+        stratify=y
     )
 )
 
 print(f"\nTraining: {len(X_train)} wells")
 print(f"Testing : {len(X_test)} wells")
 
-# ═══════════════════════════════════
 # BUILD RANDOM FOREST CLASSIFIER
-#
-# WHY RANDOM FOREST?
-# More powerful than single
-# decision tree.
-# Handles non-linear relationships.
-# Provides feature importance.
-# Widely used in petroleum ML.
-# ═══════════════════════════════════
 
 rf_model = RandomForestClassifier(
     n_estimators=100,
@@ -131,9 +110,7 @@ rf_model = RandomForestClassifier(
 rf_model.fit(X_train, y_train)
 print("\nModel trained successfully.")
 
-# ═══════════════════════════════════
 # EVALUATE THE MODEL
-# ═══════════════════════════════════
 
 y_pred = rf_model.predict(X_test)
 y_prob = rf_model.predict_proba(X_test)[:, 1]
@@ -154,11 +131,7 @@ print(classification_report(
     target_names=["No Intervention", "Needs Intervention"]
 ))
 
-# ═══════════════════════════════════
 # FEATURE IMPORTANCE
-# Which factors most predict
-# intervention need?
-# ═══════════════════════════════════
 
 importance_df = pd.DataFrame({
     "Feature": feature_columns,
@@ -172,9 +145,7 @@ for _, row in importance_df.iterrows():
     print(f"  {row['Feature']:<25} "
           f"{row['Importance']:.3f} {bar}")
 
-# ═══════════════════════════════════
 # PREDICT ON NEW WELLS
-# ═══════════════════════════════════
 
 new_wells = pd.DataFrame({
     "Days_Producing": [90, 450, 1200, 730],
@@ -202,10 +173,8 @@ for i, (pred, prob) in enumerate(
     )
     print(f"Well {i+1:2d} | {status:<25} "
           f"| {prob:.1%}")
-
- # ═══════════════════════════════════
+    
 # CLASSIFICATION VISUALISATIONS
-# ═══════════════════════════════════
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
