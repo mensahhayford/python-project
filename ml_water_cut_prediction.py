@@ -9,20 +9,7 @@ from sklearn.metrics import (
     mean_absolute_error
 )
 
-# ═══════════════════════════════════
-# THE PROBLEM:
-# Can we predict a well's water cut
-# based on how long it has been
-# producing and its initial production?
-#
-# In real petroleum operations:
-# Predicting water cut rise helps
-# engineers schedule interventions
-# BEFORE production declines severely.
-# ═══════════════════════════════════
-
-# Create a realistic training dataset
-# Simulating 50 wells with known history
+# THE PROBLEM: Predict well water cut
 np.random.seed(42)
 n_wells = 50
 
@@ -33,10 +20,6 @@ initial_production = np.random.randint(
     200, 1200, n_wells
 )
 
-# Water cut increases with time
-# and decreases with initial production
-# (high-rate wells tend to have
-# better reservoir support)
 water_cut = (
     0.05 +
     0.0003 * days_producing -
@@ -55,27 +38,21 @@ print("=== ML TRAINING DATASET ===")
 print(df_ml.describe().round(3))
 print(f"\nDataset: {len(df_ml)} wells")
 
-# ═══════════════════════════════════
 # STEP 1: DEFINE FEATURES AND TARGET
-# ═══════════════════════════════════
 
-# Features — what we use to predict
 X = df_ml[[
     "Days_Producing",
     "Initial_Production"
 ]]
 
-# Target — what we want to predict
 y = df_ml["Water_Cut"]
 
 print(f"\nFeatures shape: {X.shape}")
 print(f"Target shape: {y.shape}")
 
-# ═══════════════════════════════════
+
 # STEP 2: SPLIT INTO TRAINING AND TEST
 # 80% train, 20% test
-# random_state ensures reproducibility
-# ═══════════════════════════════════
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
@@ -86,9 +63,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"\nTraining set: {len(X_train)} wells")
 print(f"Test set: {len(X_test)} wells")
 
-# ═══════════════════════════════════
 # STEP 3: FIT THE MODEL
-# ═══════════════════════════════════
 
 model = LinearRegression()
 model.fit(X_train, y_train)
@@ -100,9 +75,7 @@ for feature, coef in zip(
 ):
     print(f"Coefficient ({feature}): {coef:.6f}")
 
-# ═══════════════════════════════════
 # STEP 4: EVALUATE ON TEST SET
-# ═══════════════════════════════════
 
 y_pred = model.predict(X_test)
 
@@ -118,10 +91,7 @@ print(f"RMSE              : {rmse:.4f}")
 print(f"  → Average error : ±{rmse*100:.1f}% water cut")
 print(f"MAE               : {mae:.4f}")
 
-# ═══════════════════════════════════
-# STEP 5: USE THE MODEL
-# Predict water cut for new wells
-# ═══════════════════════════════════
+#STEP 5: PREDICT WATER CUT FOR NEW WELLS 
 
 new_wells = pd.DataFrame({
     "Days_Producing": [180, 365, 730, 1095],
@@ -138,9 +108,8 @@ new_wells["Predicted_WC_Pct"] = (
 
 print("\n=== PREDICTIONS FOR NEW WELLS ===")
 print(new_wells.to_string())
-# ═══════════════════════════════════
+
 # VISUALISE MODEL PERFORMANCE
-# ═══════════════════════════════════
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
@@ -152,7 +121,7 @@ axes[0].scatter(
     edgecolors="black",
     linewidth=0.3
 )
-# Perfect prediction line
+
 min_val = min(y_test.min(), y_pred.min())
 max_val = max(y_test.max(), y_pred.max())
 axes[0].plot(
